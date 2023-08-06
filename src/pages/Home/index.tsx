@@ -17,14 +17,14 @@ const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
   minutesAmount: zod
     .number()
-    .min(5, 'O ciclo precisa ter no mínimo 5 minutos.')
+    .min(1, 'O ciclo precisa ter no mínimo 5 minutos.')
     .max(60, 'O ciclo precisa ter no máximo 60 minutos.'),
 })
 
 type NewCycleFromData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
-  const { activeCycle, createNewCycle, interruptCurrentCycle } =
+  const { activeCycleId, createNewCycle, interruptCurrentCycle } =
     useContext(CyclesContex)
 
   const newCyclesForm = useForm<NewCycleFromData>({
@@ -54,7 +54,7 @@ export function Home() {
 
         <Countdown />
 
-        {activeCycle ? (
+        {activeCycleId ? (
           <StopCountdownButton onClick={interruptCurrentCycle} type="button">
             <HandPalm size={24} />
             Interromper
